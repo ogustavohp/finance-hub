@@ -4,7 +4,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { dark } from '@clerk/themes'
 import { Inter } from 'next/font/google'
 
-const mulish = Inter({
+const inter = Inter({
   subsets: ['latin'],
 })
 
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <ClerkProvider appearance={{ baseTheme: dark }}>
       <html lang="pt-br" className="h-full">
-        <body className={`${mulish.className} dark h-full antialiased`}>
+        <body className={`${inter.className} dark h-full antialiased`}>
           {children}
         </body>
       </html>
