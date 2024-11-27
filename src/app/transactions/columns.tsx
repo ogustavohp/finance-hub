@@ -1,36 +1,18 @@
 'use client'
-import { Transaction } from '@prisma/client'
 import { ColumnDef } from '@tanstack/react-table'
 import { TransactionTypeBadge } from './type-badge'
 import { Button } from '@/components/ui/button'
 import { PencilIcon, TrashIcon } from 'lucide-react'
+import {
+  TRANSACTION_CATEGORY_LABELS,
+  TRANSACTION_PAYMENT_METHOD_LABELS,
+} from '@/constants/transaction'
+import { SerializedTransaction } from './page'
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
-const TRANSACTION_CATEGORY_LABELS = {
-  HOUSING: 'Moradia',
-  TRANSPORTATION: 'Transporte',
-  FOOD: 'Alimentação',
-  ENTERTAINMENT: 'Entretenimento',
-  HEALTH: 'Saúde',
-  UTILITY: 'Utilidades',
-  SALARY: 'Salário',
-  EDUCATION: 'Educação',
-  OTHER: 'Outros',
-}
-
-const TRANSACTION_PAYMENT_METHOD_LABELS = {
-  CREDIT_CARD: 'Cartão de Crédito',
-  DEBIT_CARD: 'Cartão de Débito',
-  BACK_TRANSFER: 'Transferência Bancária',
-  BANK_SLIP: 'Boleto Bancário',
-  CASH: 'Dinheiro',
-  PIX: 'Pix',
-  OTHER: 'Outros',
-}
-
-export const transactionsColumns: ColumnDef<Transaction>[] = [
+export const transactionsColumns: ColumnDef<SerializedTransaction>[] = [
   {
     accessorKey: 'name',
     header: 'Nome',
@@ -38,7 +20,7 @@ export const transactionsColumns: ColumnDef<Transaction>[] = [
   {
     accessorKey: 'type',
     header: 'Tipo',
-    cell: ({ row }) => <TransactionTypeBadge transaction={row.original} />,
+    cell: ({ row }) => <TransactionTypeBadge transaction={row.original.type} />,
   },
   {
     accessorKey: 'category',
@@ -68,7 +50,7 @@ export const transactionsColumns: ColumnDef<Transaction>[] = [
       new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL',
-      }).format(Number(row.original.amount)),
+      }).format(row.original.amount),
   },
   {
     accessorKey: 'actions',
